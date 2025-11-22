@@ -39,6 +39,7 @@
                              (const (list kanata-udev-rules)))
           (service-extension kernel-module-loader-service-type
                              (const '("uinput")))))
+   (default-value #f)
    (description "Kanata keyboard remapping service.")))
 
 ;; Local Variables:
