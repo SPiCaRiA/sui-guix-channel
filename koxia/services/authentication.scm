@@ -6,9 +6,9 @@
   #:use-module ((gnu services configuration)
                 #:select (define-configuration/no-serialization))
   #:use-module ((gnu services dbus) #:select (polkit-service-type))
-  #:use-module ((gnu system shadow) #:select (account-service-type))
   #:use-module ((gnu system accounts) #:select (user-group))
   #:use-module ((gnu system privilege) #:select (privileged-program))
+  #:use-module ((gnu system shadow) #:select (account-service-type))
   #:use-module ((guix gexp) #:select (file-union
                                       file-append
                                       file-like?))
