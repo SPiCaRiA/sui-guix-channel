@@ -10,7 +10,8 @@
   #:use-module ((gnu system accounts) #:select (user-group))
   #:use-module ((gnu system privilege) #:select (privileged-program))
   #:use-module ((guix gexp) #:select (file-union
-                                      file-append))
+                                      file-append
+                                      file-like?))
   #:use-module ((guix records) #:select (match-record-lambda))
   #:use-module ((koxia packages 1password) #:select (1password
                                                      1password-cli))
