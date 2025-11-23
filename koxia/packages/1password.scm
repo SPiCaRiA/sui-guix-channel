@@ -167,7 +167,7 @@ Add this to your @code{operating-system}'s @code{privileged-programs} field to e
                       "mesa"
                       "nspr"
                       "pango"
-                      ;; "prebuilt-libffmpeg"
+                      "prebuilt-libffmpeg"
                       ("nss" "/lib/nss")))
         ("1Password-BrowserSupport" ("gcc-toolchain" "eudev"))
         ("1Password-Crash-Handler" ("gcc-toolchain" "eudev"))
@@ -212,8 +212,7 @@ Add this to your @code{operating-system}'s @code{privileged-programs} field to e
           nspr
           nss
           pango
-          ;; prebuilt-libffmpeg
-          ))
+          prebuilt-libffmpeg))
    (propagated-inputs (list polkit
                             mate-polkit))
    (supported-systems '("x86_64-linux"))

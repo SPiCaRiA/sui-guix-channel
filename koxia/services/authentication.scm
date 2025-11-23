@@ -1,6 +1,5 @@
 (define-module (koxia services authentication)
   #:use-module ((gnu services) #:select (service-type
-                                         simple-service
                                          service-extension
                                          privileged-program-service-type))
   #:use-module ((gnu services configuration)
