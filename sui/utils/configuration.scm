@@ -5,7 +5,7 @@
 ;;; This file is generated from sui-utils.org.
 ;;; Do not modify manually.
 
-(define-module (sui systems configuration)
+(define-module (sui utils configuration)
   #:use-module (gnu)
   #:export ($
             with-config))
