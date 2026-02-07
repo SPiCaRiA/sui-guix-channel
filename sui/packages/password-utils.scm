@@ -214,7 +214,7 @@ Add this to your @code{operating-system}'s @code{privileged-programs} field:
 And a Polkit service with the action file at
 @file{share/polkit-1/actions/com.1password.1Password.policy}.")
     (license
-     (license:nonfree "https://1password.com/legal/terms-of-service"))))
+     (licensenon:nonfree "https://1password.com/legal/terms-of-service"))))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil
