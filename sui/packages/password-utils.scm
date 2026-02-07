@@ -8,6 +8,7 @@
 (define-module (sui packages password-utils)
   #:use-module (guix build-system copy)
   #:use-module (nonguix build-system binary)
+  #:use-module (nonguix build-system chromium-binary)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (gnu packages compression)
