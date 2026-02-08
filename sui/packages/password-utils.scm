@@ -54,11 +54,10 @@
       #:install-plan #~'(("op" "bin/op"))
       #:phases
       #~(modify-phases %standard-phases
-          ;; op tries to create ~/.config/op/ even for completion output.
-          (add-before 'install-completions 'set-home
-            (lambda _ (setenv "HOME" "/tmp")))
           (add-after 'install 'install-completions
             (lambda _
+              ;; op tries to create ~/.config/op/ even for completion output.
+              (setenv "HOME" "/tmp")
               (let ([op (string-append #$output "/bin/op")]
                     [bash-comp (string-append
                                 #$output "/share/bash-completion/completions")]
