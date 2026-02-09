@@ -12,7 +12,7 @@
   #:use-module (gnu services dbus)
   #:use-module (gnu services shepherd)
   #:use-module (gnu home services shepherd)
-  #:use-module (gnu packages admin)
+  #:use-module (gnu packages freedesktop)
   #:use-module (gnu system accounts)
   #:use-module (gnu system pam)
   #:use-module (gnu system privilege)
