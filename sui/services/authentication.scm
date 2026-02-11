@@ -93,6 +93,18 @@ authorized for 1Password CLI and SSH agent access via polkit."))
       (1password 1password-cli)
     (list 1password 1password-cli)))
 
+;; 1Password checks that /run/dbus is owned by root:root (standard distro
+;; behavior).  Guix's dbus service creates it owned by messagebus.  A one-shot
+;; shepherd service fixes the ownership after dbus starts.
+(define 1password-dbus-fix
+  (list (shepherd-service
+          (documentation "Fix /run/dbus ownership for 1Password.")
+          (provision '(1password-dbus-fix))
+          (requirement '(dbus-system))
+          (one-shot? #t)
+          (start #~(lambda ()
+                     (chown "/run/dbus" 0 0))))))
+
 (define 1password-service-type
   (service-type
     (name '1password)
@@ -104,7 +116,9 @@ authorized for 1Password CLI and SSH agent access via polkit."))
            (service-extension polkit-service-type
                               1password-polkit-policies)
            (service-extension profile-service-type
-                              1password-packages)))
+                              1password-packages)
+           (service-extension shepherd-root-service-type
+                              (const 1password-dbus-fix))))
     (description "Set user groups, setuid programs, and polkit policies for
 1Password.")))
 

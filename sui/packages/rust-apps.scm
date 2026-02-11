@@ -36,8 +36,6 @@
     (arguments
      (list
       #:install-source? #f
-      #:cargo-inputs (cargo-inputs 'tex-fmt
-                                   #:module '(sui packages rust-crates))
       #:phases
       #~(modify-phases %standard-phases
           (add-after 'install 'install-extras
@@ -50,6 +48,8 @@
                 (install-file "completion/tex-fmt.bash" bash)
                 (install-file "completion/tex-fmt.fish" fish)
                 (install-file "completion/_tex-fmt" zsh)))))))
+    (inputs (cargo-inputs 'tex-fmt
+                          #:module '(sui packages rust-crates)))
     (home-page "https://github.com/WGUNDERWOOD/tex-fmt")
     (synopsis "LaTeX formatter written in Rust")
     (description "An extremely fast LaTeX formatter written in Rust.  Provides
