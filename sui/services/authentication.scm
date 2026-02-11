@@ -8,6 +8,7 @@
 (define-module (sui services authentication)
   #:use-module (gnu services)
   #:use-module (gnu services configuration)
+  #:use-module (gnu services dbus)
   #:use-module (gnu services shepherd)
   #:use-module (gnu home services shepherd)
   #:use-module (gnu packages freedesktop)
