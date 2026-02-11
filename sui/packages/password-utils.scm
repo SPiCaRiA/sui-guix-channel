@@ -39,14 +39,14 @@
 (define-public 1password-cli
   (package
     (name "1password-cli")
-    (version "2.30.3")
+    (version "2.32.1")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://cache.agilebits.com/dist/1P/op2/pkg/v"
                            version "/op_linux_amd64_v" version ".zip"))
        (sha256
-        (base32 "0a7fsmbmwa2x5kg1cijggj4w1hw0qgqg8vvs3l4zsh6brvmhfqx1"))))
+        (base32 "18dj0ldd10a0bpxq7izj4l756plrhhz6wm48xqxkycxhs6r9v934"))))
     (build-system copy-build-system)
     (native-inputs (list unzip))
     (arguments
@@ -130,14 +130,14 @@ instructions for Window, Linux and macOS.")
 (define-public 1password
   (package
     (name "1password")
-    (version "8.10.76")
+    (version "8.12.2")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://downloads.1password.com/linux/tar/stable"
                            "/x86_64/1password-" version ".x64.tar.gz"))
        (sha256
-        (base32 "0d57bnfrb7qqppvmx9cc2mmay5mp980s6zv5yzd42hqnzmjfcimw"))))
+        (base32 "0nsb4229kv97g3sdy8z3slvn8h8my7pxgskdxzx2j375130qd7xw"))))
     (build-system chromium-binary-build-system)
     (arguments
      (list
