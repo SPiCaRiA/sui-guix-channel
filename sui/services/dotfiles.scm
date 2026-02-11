@@ -11,8 +11,10 @@
   #:use-module (gnu services configuration)
   #:use-module (guix gexp)
   #:use-module (guix utils)
+  #:use-module (ice-9 ftw)
   #:use-module (ice-9 match)
   #:use-module (ice-9 regex)
+  #:use-module (srfi srfi-1)
   #:export (home-sui-dotfiles-service-type
             home-sui-dotfiles-configuration))
 
@@ -29,6 +31,7 @@
   (match entry
     [((? string?) (? string?)) #t]
     [((? string?) (? string?) (? boolean?)) #t]
+    [((? string?) (? string?) 'mutable) #t]
     [_ #f]))
 (define list-of-dotfile-entries?
   (list-of dotfile-entry?))
@@ -65,13 +68,46 @@
 
 (define (dotfile->file-entry source-directory select?)
   (match-lambda
+    ;; Mutable directory: enumerate top-level children individually so that
+    ;; the parent directory is a real (writable) directory, not a store symlink.
+    [(dest src 'mutable)
+     (let* ((src-dir (in-vicinity source-directory src))
+            (all-children (or (scandir src-dir
+                                       (lambda (f)
+                                         (not (member f '("." "..")))))
+                              '()))
+            (children (if select?
+                          (filter (lambda (child)
+                                    (let ((p (in-vicinity src-dir child)))
+                                      (select? p (lstat p))))
+                                  all-children)
+                          all-children)))
+       (map (lambda (child)
+              (let* ((child-path (in-vicinity src-dir child))
+                     (child-dest (in-vicinity dest child))
+                     (dir? (eq? 'directory
+                                (stat:type (lstat child-path)))))
+                (if dir?
+                    (list child-dest
+                          (local-file child-path
+                                      (sanitize-store-name child)
+                                      #:recursive? #t
+                                      #:select? select?))
+                    (list child-dest
+                          (local-file child-path
+                                      (sanitize-store-name child))))))
+            children))]
+    ;; Recursive directory (immutable).
     [(dest src #t)
-     (list dest (local-file (in-vicinity source-directory src)
-                            (sanitize-store-name src)
-                            #:recursive? #t #:select? select?))]
+     (list
+      (list dest (local-file (in-vicinity source-directory src)
+                             (sanitize-store-name src)
+                             #:recursive? #t #:select? select?)))]
+    ;; Single file.
     [(or (dest src #f) (dest src))
-     (list dest (local-file (in-vicinity source-directory src)
-                            (sanitize-store-name src)))]))
+     (list
+      (list dest (local-file (in-vicinity source-directory src)
+                             (sanitize-store-name src))))]))
 
 (define (make-entries getter)
   (lambda (config)
@@ -80,8 +116,8 @@
            [excluded (home-sui-dotfiles-configuration-excluded config)]
            [select? (and (not (null? excluded))
                          (make-exclusion-predicate excluded))])
-      (map (dotfile->file-entry source-directory select?)
-           (getter config)))))
+      (append-map (dotfile->file-entry source-directory select?)
+                  (getter config)))))
 
 (define home-sui-dotfiles-service-type
   (service-type
