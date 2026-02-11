@@ -24,7 +24,6 @@
 
 (define list-of-strings?
   (list-of string?))
-(define-maybe/no-serialization list-of-strings)
 
 (define (dotfile-entry? entry)
   (match entry
@@ -48,7 +47,7 @@
    (list-of-dotfile-entries '())
    "List of (dest src [recursive?]) for XDG data files.")
   (excluded
-   (maybe-list-of-strings)
+   (list-of-strings '())
    "List of file patterns to exclude."))
 
 (define (make-exclusion-predicate excluded)
@@ -79,7 +78,7 @@
     (let* ([source-directory
             (home-sui-dotfiles-configuration-source-directory config)]
            [excluded (home-sui-dotfiles-configuration-excluded config)]
-           [select? (and (maybe-value-set? excluded)
+           [select? (and (not (null? excluded))
                          (make-exclusion-predicate excluded))])
       (map (dotfile->file-entry source-directory select?)
            (getter config)))))

@@ -153,7 +153,6 @@ instructions for Window, Linux and macOS.")
       #~'(("./" "share/1Password/")
           ("resources/1password.desktop" "share/applications/")
           ("resources/icons/" "share/icons/")
-          ("com.1password.1Password.policy" "share/polkit-1/actions/")
           ("resources/custom_allowed_browsers" "share/doc/1password/examples/"))
       #:phases
       #~(modify-phases %standard-phases
@@ -169,13 +168,6 @@ instructions for Window, Linux and macOS.")
 
           ;; All the following phases are based on the official after-install.sh
           ;; script in the tarball.
-          (add-after 'unpack 'prepare-policy-file
-            (lambda _
-              (substitute* "com.1password.1Password.policy.tpl"
-                (("[$]{1}[{]{1}POLICY_OWNERS[}]{1}")
-                 "unix-group:onepassword"))
-              (copy-file "com.1password.1Password.policy.tpl"
-                         "com.1password.1Password.policy")))
           (add-after 'unpack 'set-sandbox-permissions
             (lambda _
               (chmod "chrome-sandbox" #o4755)))
@@ -213,8 +205,8 @@ Add this to your @code{operating-system}'s @code{privileged-programs} field:
   %default-privileged-programs))
 @end example
 
-And a Polkit service with the action file at
-@file{share/polkit-1/actions/com.1password.1Password.policy}.")
+Use @code{1password-service-type} from @code{(sui services authentication)} to
+set up groups, setgid wrappers, and the Polkit policy.")
     (license
      (licensenon:nonfree "https://1password.com/legal/terms-of-service"))))
 
