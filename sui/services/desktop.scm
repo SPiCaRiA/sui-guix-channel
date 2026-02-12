@@ -21,7 +21,7 @@
 (define home-hyprpolkitagent-shepherd
   (list (shepherd-service
           (documentation "Start hyprpolkitagent.")
-          (provision '(polkit-agent))
+          (provision '(hyprpolkitagent))
           (start
            #~(make-forkexec-constructor
               (list #$(file-append hyprpolkitagent
