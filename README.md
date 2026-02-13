@@ -1,5 +1,3 @@
-# The Koxia Guix Channel
-
 <div align="center"><img src="https://static.wikia.nocookie.net/virtualyoutuber/images/8/85/Koxia_Headshot.png" width="300px" style="display:block;margin:0 auto"></div>
 
 -----
