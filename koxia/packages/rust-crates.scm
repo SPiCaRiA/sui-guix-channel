@@ -68,6 +68,10 @@
   (crate-source "bitflags" "2.10.0"
                 "1lqxwc3625lcjrjm5vygban9v8a6dlxisp1aqylibiaw52si4bl1"))
 
+(define rust-bitflags-2.11.0
+  (crate-source "bitflags" "2.11.0"
+                "1bwjibwry5nfwsfm9kjg2dqx5n5nja9xymwbfl6svnn8jsz6ff44"))
+
 (define rust-bstr-1.12.1
   (crate-source "bstr" "1.12.1"
                 "1arc1v7h5l86vd6z76z3xykjzldqd5icldn7j9d3p7z6x0d4w133"))
@@ -473,7 +477,7 @@
                                     rust-anstyle-query-1.1.5
                                     rust-anstyle-wincon-3.0.11
                                     rust-autocfg-1.5.0
-                                    rust-bitflags-2.10.0
+                                    rust-bitflags-2.11.0
                                     rust-bstr-1.12.1
                                     rust-bumpalo-3.19.1
                                     rust-cfg-if-1.0.4
