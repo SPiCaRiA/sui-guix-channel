@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (gnu packages rust-crates)
+(define-module (koxia packages rust-crates)
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix download)
@@ -63,10 +63,6 @@
 (define rust-autocfg-1.5.0
   (crate-source "autocfg" "1.5.0"
                 "1s77f98id9l4af4alklmzq46f21c980v13z2r1pcxx6bqgw0d1n0"))
-
-(define rust-bitflags-2.10.0
-  (crate-source "bitflags" "2.10.0"
-                "1lqxwc3625lcjrjm5vygban9v8a6dlxisp1aqylibiaw52si4bl1"))
 
 (define rust-bitflags-2.11.0
   (crate-source "bitflags" "2.11.0"
