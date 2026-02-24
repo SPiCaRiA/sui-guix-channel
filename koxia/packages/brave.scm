@@ -21,7 +21,7 @@
 (define-public brave-browser
   (package
     (name "brave")
-    (version "1.79.119")
+    (version "1.87.190")
     (source
      (origin
        (method url-fetch/zipbomb)
@@ -29,7 +29,7 @@
                            "download/v" version "/brave-browser-" version
                            "-linux-amd64.zip"))
        (sha256
-        (base32 "1kbg2i9j8xbahm816w6q8f87i5y4dialjgmxg705a9pxqhdad26d"))))
+        (base32 "08y76fwigpzrnld923zqzbn25kr3zqjqax9whivab5y45qhzq2sz"))))
     (build-system chromium-binary-build-system)
     (arguments
      (list
@@ -50,12 +50,14 @@
           (add-after 'install 'create-desktop-file
             (lambda _
               (make-desktop-entry-file
-               (string-append #$output "/share/applications/brave-browser.desktop")
+               (string-append #$output
+                              "/share/applications/brave-browser.desktop")
                #:name "Brave"
                #:generic-name "Web Browser"
                #:startup-notify #t
                #:startup-w-m-class "brave-browser"
-               #:exec (string-join (list (string-append #$output "/bin/brave") "%U"))
+               #:exec (string-append #$output
+                                     "/bin/brave --ozone-platform-hint=auto")
                #:icon "brave-desktop"
                #:keywords '("brave")
                #:comment
@@ -63,7 +65,8 @@
                  (#f "Brave"))))))))
     (synopsis "Brave browser")
     (supported-systems '("x86_64-linux"))
-    (description "The new browser that blocks ads and trackers and protects your privacy.")
+    (description "The new browser that blocks ads and trackers and protects your
+privacy.")
     (home-page "https://brave.com/")
     (license license:mpl2.0)))
 

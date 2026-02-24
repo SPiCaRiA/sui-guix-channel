@@ -70,23 +70,23 @@ authorized for 1Password CLI and SSH agent access via polkit."))
 (define 1password-polkit-policies
   (match-record-lambda <1password-configuration>
       (1password owners)
-    (define template
-      (file-append 1password
-                   "/share/1Password/com.1password.1Password.policy.tpl"))
-    (define owners-string
-      (string-join (map (cut string-append "unix-user:" <>) owners) " "))
-    (list
-     (computed-file
-      "1password-polkit"
-      (with-imported-modules '((guix build utils))
-        #~(begin
-            (use-modules (guix build utils))
-            (let ((dst (string-append #$output "/share/polkit-1/actions/"
-                                      "com.1password.1Password.policy")))
-              (mkdir-p (dirname dst))
-              (copy-file #$template dst)
-              (substitute* dst
-                (("\\$\\{POLICY_OWNERS\\}") #$owners-string)))))))))
+    (let ([template
+           (file-append 1password
+                        "/share/1Password/com.1password.1Password.policy.tpl")]
+          [owners-string
+           (string-join (map (cut string-append "unix-user:" <>) owners) " ")])
+      (list
+       (computed-file
+        "1password-polkit"
+        (with-imported-modules '((guix build utils))
+          #~(begin
+              (use-modules (guix build utils))
+              (let ([dst (string-append #$output "/share/polkit-1/actions/"
+                                        "com.1password.1Password.policy")])
+                (mkdir-p (dirname dst))
+                (copy-file #$template dst)
+                (substitute* dst
+                  (("\\$\\{POLICY_OWNERS\\}") #$owners-string))))))))))
 
 (define 1password-packages
   (match-record-lambda <1password-configuration>
